@@ -19,24 +19,83 @@
 
     var stage = new createjs.Stage("stage");
 
-    var images = [];
-    for (var i=0;i<9;i++){
-        var image = new createjs.Bitmap("./i/up.png");
-        stage.addChild(image);
-        images.push(image);
+    var upImages = [];
+    var downImages = [];
+
+
+    //timings
+    var t_upDuration      =  90;
+    var t_downDuration    = 180;
+    var t_chevronDuration    = 180;
+    var t_ctaDuration     = 180;
+
+
+
+    function setupUpSequence(){
+        for (var i=0;i<9;i++){
+            var image = new createjs.Bitmap("./i/up.png");
+            stage.addChild(image);
+            upImages.push(image);
+        }
     }
 
+
+    function setupDownSequence(){
+        for (i=0;i<10;i++){
+            var image = new createjs.Bitmap("./i/down.png");
+            stage.addChild(image);
+            downImages.push(image);
+        }
+    }
 
     createjs.Ticker.addEventListener("tick", handleTick);
 
+
+
+
     function handleTick(event) {
-        for (var i=0;i<9;i++){
-            var image = images[i];
-            image.x += 10 * (0.1 * i);
+
+        if (tick < t_upDuration ){
+            updateUpSequence();
+        }else if (tick < t_downDuration){
+            updateDownSequence();
+        }else if (tick < t_chevronDuration){
+            updateChevronSequence();
+        }else{
+            updateCTASequence();
         }
+
 
         stage.update();
     }
+
+    function updateDownSequence(){
+        for (var i=0;i<9;i++){
+            var image = downImages[i];
+            image.x += 10 * (0.1 * i);
+            image.y -= 10 * (0.1 * i);
+        }
+    }
+
+    function updateUpSequence(){
+        for (var i=0;i<9;i++){
+            var image = upImages[i];
+            image.x += 10 * (0.1 * i);
+            image.y -= 10 * (0.1 * i);
+        }
+    }
+
+    function updateCTASequence(){
+        var bar = 0;
+        var foo = bar;
+    }
+
+    function updateCTASequence(){
+        var bar = 0;
+        var foo = bar;
+    }
+
+
 </script>
 
 

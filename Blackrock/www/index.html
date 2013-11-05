@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="./s/styles.css" rel="stylesheet" type="text/css" />
+
+
+    <title>Blackrock</title>
+    <script type="text/javascript" src="./j/easeljs-0.7.0.min.js"> </script>
+    <script type="text/javascript" src="./j/movieclip-0.7.0.min.js"> </script>
+
+</head>
+<body onload="setup();">
+    <div class="canvasHolder">
+            <canvas id="stage" width="960" height="832"></canvas>
+    </div>
+</body>
+
+<script>
+
+    var stage = new createjs.Stage("stage");
+
+    var images = [];
+    for (var i=0;i<9;i++){
+        var image = new createjs.Bitmap("./i/up.png");
+        stage.addChild(image);
+        images.push(image);
+    }
+
+
+    createjs.Ticker.addEventListener("tick", handleTick);
+
+    function handleTick(event) {
+        for (var i=0;i<9;i++){
+            var image = images[i];
+            image.x += 10 * (0.1 * i);
+        }
+
+        stage.update();
+    }
+</script>
+
+
+</html>

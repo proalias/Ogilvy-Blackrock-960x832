@@ -24,10 +24,10 @@
 
 
     //timings
-    var t_upDuration      =  90;
-    var t_downDuration    = 180;
-    var t_chevronDuration    = 180;
-    var t_ctaDuration     = 180;
+    var t_upBeginFrame      =  9000;
+    var t_downBeginFrame    = 18000;
+    var t_chevronBeginFrame    = 27000;
+    var t_ctaBeginFrame     = 36000;
 
 
 
@@ -48,6 +48,20 @@
         }
     }
 
+
+    function setupChevronSequence(){
+
+    }
+
+    function setupCTASequence(){
+
+    }
+
+    setupUpSequence();
+    setupDownSequence();
+    setupChevronSequence();
+    setupCTASequence();
+
     createjs.Ticker.addEventListener("tick", handleTick);
 
 
@@ -55,11 +69,11 @@
 
     function handleTick(event) {
 
-        if (tick < t_upDuration ){
+        if (event.time < t_upBeginFrame ){
             updateUpSequence();
-        }else if (tick < t_downDuration){
+        }else if (event.time < t_downBeginFrame){
             updateDownSequence();
-        }else if (tick < t_chevronDuration){
+        }else if (event.time < t_chevronBeginFrame){
             updateChevronSequence();
         }else{
             updateCTASequence();

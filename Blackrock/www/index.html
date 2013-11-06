@@ -40,16 +40,16 @@
 
 
     //timings
-    var t_upBeginFrame      =   5000;
-    var t_downBeginFrame    =  10000;
-    var t_chevronBeginFrame =  65000;
-    var t_ctaBeginFrame     =  74000;
+    var t_upBeginFrame      = 00001;
+    var t_downBeginFrame    = 03000;
+    var t_chevronBeginFrame = 06000;
+    var t_ctaBeginFrame     = 10000;
 
 
     up_sizes=[];
     up_sizes[0] = 0.51;
     up_sizes[1] = 0.91;
-    up_sizes[2] = 0.1;
+    up_sizes[2] = 0.31;
     up_sizes[3] = 0.41;
     up_sizes[4] = 0.81;
     up_sizes[5] = 0.81;
@@ -59,15 +59,15 @@
 
 
     down_sizes=[];
-    down_sizes[0] = 0.81;
-    down_sizes[1] = 0.81;
-    down_sizes[2] = 0.81;
-    down_sizes[3] = 0.81;
-    down_sizes[4] = 0.81;
-    down_sizes[5] = 0.81;
-    down_sizes[6] = 0.81;
-    down_sizes[7] = 0.81;
-    down_sizes[8] = 0.81;
+    down_sizes[0] = 1.00;
+    down_sizes[1] = 0.849;
+    down_sizes[2] = 0.61;
+    down_sizes[3] = 0.798;
+    down_sizes[4] = 0.817;
+    down_sizes[5] = 0.695;
+    down_sizes[6] = 0.798;
+    down_sizes[7] = 0.798;
+    down_sizes[8] = 0.689;
     down_sizes[9] = 0.81;
 
 
@@ -119,16 +119,16 @@
 
     positions["down_start"]=[];
 
-    positions["down_start"][0] = [0,0];
-    positions["down_start"][1] = [0,0];
-    positions["down_start"][2] = [0,0];
-    positions["down_start"][3] = [0,0];
-    positions["down_start"][4] = [0,0];
-    positions["down_start"][5] = [0,0];
-    positions["down_start"][6] = [0,0];
-    positions["down_start"][7] = [0,0];
-    positions["down_start"][8] = [0,0];
-    positions["down_start"][9] = [0,0];
+    positions["down_start"][0] = [-824,-628];
+    positions["down_start"][1] = [-630,-95];
+    positions["down_start"][2] = [-326,-594];
+    positions["down_start"][3] = [-81,-532];
+    positions["down_start"][4] = [-725,-54];
+    positions["down_start"][5] = [-823,12];
+    positions["down_start"][6] = [-557,-364];
+    positions["down_start"][7] = [-283,-449];
+    positions["down_start"][8] = [-658,-594];
+    positions["down_start"][9] = [-496,-208];
 
     positions["down_end"]=[];
 
@@ -170,10 +170,10 @@
             image.scaleX = up_sizes[i];
             image.scaleY = up_sizes[i];
 
-            var tween = createjs.Tween.get(image, {loop:false}).to({x:positions["up_mid"][i][0], y:positions["up_mid"][i][1]}, 2000*up_sizes[i], createjs.Ease.linear)
-                 .wait(10000)
-                 .to({x:positions["up_end"][i][0], y:positions["up_end"][i][1]}, 2500, createjs.Ease.bounceOut)
-                 .wait(10000);
+            //var tween = createjs.Tween.get(image, {loop:false}).to({x:positions["up_mid"][i][0], y:positions["up_mid"][i][1]}, 2000*up_sizes[i], createjs.Ease.linear)
+             //    .wait(10000)
+              //   .to({x:positions["up_end"][i][0], y:positions["up_end"][i][1]}, 2500, createjs.Ease.bounceOut)
+               //  .wait(10000);
 
             upImages.push(image);
         }
@@ -186,9 +186,21 @@
 
         stage.removeAllChildren();
 
-        for (i=0;i<10;i++){
+        for (var i=0;i<10;i++){
             var image = new createjs.Bitmap("./i/down.png");
             stage.addChild(image);
+
+            image.x = positions["down_start"][i][0];
+            image.y = positions["down_start"][i][1];
+
+            image.scaleX = down_sizes[i];
+            image.scaleY = down_sizes[i];
+
+            //var tween = createjs.Tween.get(image, {loop:false}).to({x:positions["up_mid"][i][0], y:positions["up_mid"][i][1]}, 2000*up_sizes[i], createjs.Ease.linear)
+            //    .wait(10000)
+            //   .to({x:positions["up_end"][i][0], y:positions["up_end"][i][1]}, 2500, createjs.Ease.bounceOut)
+            //  .wait(10000);
+
             downImages.push(image);
         }
 
@@ -220,7 +232,7 @@
             started = true;
         }
 
-        var section = Math.round(mapRange([startTime, t_ctaBeginFrame],[0,4],event.time));
+        var section = Math.floor(mapRange([startTime, t_ctaBeginFrame + startTime],[0,4],event.time));
 
         if (section != currentSection){
             //section changed - do setup
@@ -243,7 +255,7 @@
 
         switch (section){
             case 0:
-                //updateUpSequence();
+                updateUpSequence();
                 break;
             case 1:
                 updateDownSequence();
@@ -260,18 +272,18 @@
     }
 
     function updateDownSequence(){
-        for (var i=0;i<9;i++){
+        for (var i=0;i<10;i++){
             var image = downImages[i];
-            image.x += 10 * (0.1 * i);
-            image.y -= 10 * (0.1 * i);
+            image.x += 11.5 * (5 * down_sizes[i]);
+            image.y += 8.5 * (5 * down_sizes[i]);
         }
     }
 
     function updateUpSequence(){
         for (var i=0;i<9;i++){
             var image = upImages[i];
-            image.x += 10 * (0.1 * i);
-            image.y -= 10 * (0.1 * i);
+            image.x += 12.5 * (5 * up_sizes[i]);
+            image.y -= 7.5 * (5 * up_sizes[i]);
         }
     }
 

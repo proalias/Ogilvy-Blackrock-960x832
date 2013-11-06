@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+
     <link href="./s/styles.css" rel="stylesheet" type="text/css" />
 
 
     <title>Blackrock</title>
     <script type="text/javascript" src="./j/easeljs-0.7.0.min.js"> </script>
-    <script type="text/javascript" src="./j/movieclip-0.7.0.min.js"> </script>
     <script type="text/javascript" src="./j/tweenjs-0.5.0.min.js"> </script>
+    <script type="text/javascript" src="./j/movieclip-0.7.0.min.js"> </script>
 
 </head>
 <body onload="setup();">
@@ -34,10 +36,10 @@
 
 
     //timings
-    var t_upBeginFrame      =  15000;
-    var t_downBeginFrame    = 210000;
-    var t_chevronBeginFrame    = 35000;
-    var t_ctaBeginFrame     = 40000;
+    var t_upBeginFrame      =  55000;
+    var t_downBeginFrame    = 100000;
+    var t_chevronBeginFrame = 155000;
+    var t_ctaBeginFrame     = 240000;
 
 
     //setup
@@ -99,7 +101,7 @@
             started = true;
         }
 
-        var section = Math.round(mapRange([startTime, 10000+startTime],[0,4],event.time));
+        var section = Math.round(mapRange([startTime, t_ctaBeginFrame],[0,4],event.time));
 
         if (section != currentSection){
             //section changed - do setup
@@ -117,6 +119,7 @@
                     setupCTASequence();
                     break;
             }
+            currentSection = section;
         }
 
         switch (section){

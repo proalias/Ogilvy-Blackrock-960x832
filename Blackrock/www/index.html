@@ -9,11 +9,13 @@
     <title>Blackrock</title>
     <script type="text/javascript" src="./j/easeljs-0.7.0.min.js"> </script>
     <script type="text/javascript" src="./j/tweenjs-0.5.0.min.js"> </script>
+    <script type="text/javascript" src="./j/Tween.js"></script>
+    <script type="text/javascript" src="./j/Ease.js"></script>
     <script type="text/javascript" src="./j/movieclip-0.7.0.min.js"> </script>
 
 </head>
 <body onload="setup();">
-    <div class="canvasHolder">
+    <div class="canvasHolder" style="background-color: #000" width="960" height="832">
             <canvas id="stage" width="960" height="832"></canvas>
     </div>
 </body>
@@ -28,6 +30,8 @@
     var downImages = [];
     var chevron;
 
+    //vectors
+    var bg;
     //switches
     var started = false;
 
@@ -38,8 +42,33 @@
     //timings
     var t_upBeginFrame      =   5000;
     var t_downBeginFrame    =  10000;
-    var t_chevronBeginFrame =  15000;
-    var t_ctaBeginFrame     =  24000;
+    var t_chevronBeginFrame =  65000;
+    var t_ctaBeginFrame     =  74000;
+
+
+    up_sizes=[];
+    up_sizes[0] = 0.51;
+    up_sizes[1] = 0.91;
+    up_sizes[2] = 0.1;
+    up_sizes[3] = 0.41;
+    up_sizes[4] = 0.81;
+    up_sizes[5] = 0.81;
+    up_sizes[6] = 0.81;
+    up_sizes[7] = 0.81;
+    up_sizes[8] = 0.81;
+
+
+    down_sizes=[];
+    down_sizes[0] = 0.81;
+    down_sizes[1] = 0.81;
+    down_sizes[2] = 0.81;
+    down_sizes[3] = 0.81;
+    down_sizes[4] = 0.81;
+    down_sizes[5] = 0.81;
+    down_sizes[6] = 0.81;
+    down_sizes[7] = 0.81;
+    down_sizes[8] = 0.81;
+    down_sizes[9] = 0.81;
 
 
     //up arrow start + end positions
@@ -53,7 +82,7 @@
     positions["up_start"][2] = [-660,880];
     positions["up_start"][3] = [40,842];
     positions["up_start"][4] = [-111,842];
-    positions["up_start"][5] = [-542,-818];
+    positions["up_start"][5] = [-542,818];
     positions["up_start"][6] = [-430,224];
     positions["up_start"][7] = [-706,311];
     positions["up_start"][8] = [-581,126];
@@ -121,6 +150,10 @@
         currentSection = -1;
         stage = new createjs.Stage("stage");
         createjs.Ticker.addEventListener("tick", handleTick);
+
+        bg = new createjs.Shape();
+        bg.graphics.beginFill("#ff0000").drawRect(0, 0, stage.width, stage.height);
+        stage.addChild(bg);
     }
 
     function setupUpSequence(){
@@ -130,8 +163,22 @@
         for (var i=0;i<9;i++){
             var image = new createjs.Bitmap("./i/up.png");
             stage.addChild(image);
+
+            image.x = positions["up_start"][i][0];
+            image.y = positions["up_start"][i][1];
+
+            image.scaleX = up_sizes[i];
+            image.scaleY = up_sizes[i];
+
+            var tween = createjs.Tween.get(image, {loop:false}).to({x:positions["up_mid"][i][0], y:positions["up_mid"][i][1]}, 2000*up_sizes[i], createjs.Ease.linear)
+                 .wait(10000)
+                 .to({x:positions["up_end"][i][0], y:positions["up_end"][i][1]}, 2500, createjs.Ease.bounceOut)
+                 .wait(10000);
+
             upImages.push(image);
         }
+
+        stage.addChild(bg);
     }
 
 
@@ -144,6 +191,8 @@
             stage.addChild(image);
             downImages.push(image);
         }
+
+        stage.addChild(bg);
     }
 
 
@@ -156,9 +205,6 @@
     function setupCTASequence(){
 
     }
-
-
-
 
 
     // Javascript doesn't have built-in support for ranges
@@ -197,7 +243,7 @@
 
         switch (section){
             case 0:
-                updateUpSequence();
+                //updateUpSequence();
                 break;
             case 1:
                 updateDownSequence();

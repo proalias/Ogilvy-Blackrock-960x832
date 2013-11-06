@@ -28,7 +28,13 @@
     //images
     var upImages = [];
     var downImages = [];
-    var chevron;
+    var chevron0;
+    var chevron1;
+
+    var copy_up;
+    var copy_down;
+
+    var logo;
 
     //vectors
     var bg;
@@ -49,7 +55,7 @@
     up_sizes=[];
     up_sizes[0] = 0.51;
     up_sizes[1] = 0.91;
-    up_sizes[2] = 0.31;
+    up_sizes[2] = 0.71;
     up_sizes[3] = 0.41;
     up_sizes[4] = 0.81;
     up_sizes[5] = 0.81;
@@ -151,15 +157,18 @@
         stage = new createjs.Stage("stage");
         createjs.Ticker.addEventListener("tick", handleTick);
 
-        bg = new createjs.Shape();
-        bg.graphics.beginFill("#ff0000").drawRect(0, 0, stage.width, stage.height);
-        stage.addChild(bg);
+
+        logo = new createjs.Bitmap("./i/logo.png");
+
+        logo.x = 546;
+        logo.y = 698;
     }
 
     function setupUpSequence(){
 
         stage.removeAllChildren();
 
+        copy_up = new createjs.Bitmap("./i/tropi_alti.png");
         for (var i=0;i<9;i++){
             var image = new createjs.Bitmap("./i/up.png");
             stage.addChild(image);
@@ -178,13 +187,21 @@
             upImages.push(image);
         }
 
-        stage.addChild(bg);
+        stage.addChild(logo);
+        logo.x = 546;
+        logo.y = 698;
     }
 
 
     function setupDownSequence(){
 
         stage.removeAllChildren();
+
+        copy_down = new createjs.Bitmap("./i/tropi_alti.png");
+
+
+        copy_down.x = 0;
+        copy_down.y = 0;
 
         for (var i=0;i<10;i++){
             var image = new createjs.Bitmap("./i/down.png");
@@ -204,14 +221,36 @@
             downImages.push(image);
         }
 
-        stage.addChild(bg);
+        stage.addChild(logo);
+        logo.x = 546;
+        logo.y = 698;
     }
 
 
     function setupChevronSequence(){
         stage.removeAllChildren();
-        chevron = new createjs.Bitmap("./i/chevron.png");
-        stage.addChild(chevron);
+        chevron0 = new createjs.Bitmap("./i/chevron.png");
+        chevron1 = new createjs.Bitmap("./i/chevron.png");
+
+        chevron0.x = -650;
+        chevron0.y = 0;
+
+        chevron1.x = -1300;
+        chevron1.y = 0;
+
+        stage.addChild(chevron0);
+        stage.addChild(chevron1);
+        stage.addChild(logo);
+
+        var tween1 = createjs.Tween.get(chevron0, {loop:false}).to({x:300, y:0}, 2000, createjs.Ease.quadOut);
+        var tween2 = createjs.Tween.get(chevron1, {loop:false}).to({x:-400, y:0}, 2000, createjs.Ease.quadOut);
+
+        // .to({x:positions["up_end"][i][0], y:positions["up_end"][i][1]}, 2500, createjs.Ease.bounceOut)
+        //  .wait(10000);
+
+        stage.addChild(logo);
+        logo.x = 546;
+        logo.y = 698;
     }
 
     function setupCTASequence(){
@@ -288,7 +327,7 @@
     }
 
     function updateChevronSequence(){
-        chevron.x += 10;
+        //
     }
 
     function updateCTASequence(){

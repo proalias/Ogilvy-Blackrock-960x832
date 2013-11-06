@@ -7,6 +7,7 @@
     <title>Blackrock</title>
     <script type="text/javascript" src="./j/easeljs-0.7.0.min.js"> </script>
     <script type="text/javascript" src="./j/movieclip-0.7.0.min.js"> </script>
+    <script type="text/javascript" src="./j/tweenjs-0.5.0.min.js"> </script>
 
 </head>
 <body onload="setup();">
@@ -17,21 +18,40 @@
 
 <script>
 
-    var stage = new createjs.Stage("stage");
 
+    var stage;
+
+    //images
     var upImages = [];
     var downImages = [];
+    var chevron;
+
+    //switches
+    var started = false;
+
+    //state
+    var currentSection;
 
 
     //timings
-    var t_upBeginFrame      =  9000;
-    var t_downBeginFrame    = 18000;
-    var t_chevronBeginFrame    = 27000;
-    var t_ctaBeginFrame     = 36000;
+    var t_upBeginFrame      =  15000;
+    var t_downBeginFrame    = 210000;
+    var t_chevronBeginFrame    = 35000;
+    var t_ctaBeginFrame     = 40000;
 
 
+    //setup
+
+    function setup(){
+        currentSection = -1;
+        stage = new createjs.Stage("stage");
+        createjs.Ticker.addEventListener("tick", handleTick);
+    }
 
     function setupUpSequence(){
+
+        stage.removeAllChildren();
+
         for (var i=0;i<9;i++){
             var image = new createjs.Bitmap("./i/up.png");
             stage.addChild(image);
@@ -41,6 +61,9 @@
 
 
     function setupDownSequence(){
+
+        stage.removeAllChildren();
+
         for (i=0;i<10;i++){
             var image = new createjs.Bitmap("./i/down.png");
             stage.addChild(image);
@@ -50,35 +73,66 @@
 
 
     function setupChevronSequence(){
-
+        stage.removeAllChildren();
+        chevron = new createjs.Bitmap("./i/chevron.png");
+        stage.addChild(chevron);
     }
 
     function setupCTASequence(){
 
     }
 
-    setupUpSequence();
-    setupDownSequence();
-    setupChevronSequence();
-    setupCTASequence();
-
-    createjs.Ticker.addEventListener("tick", handleTick);
 
 
+
+
+    // Javascript doesn't have built-in support for ranges
+    // Insted we use arrays of two elements to represent ranges
+    var mapRange = function(from, to, s) {
+        return to[0] + (s - from[0]) * (to[1] - to[0]) / (from[1] - from[0]);
+    };
 
 
     function handleTick(event) {
-
-        if (event.time < t_upBeginFrame ){
-            updateUpSequence();
-        }else if (event.time < t_downBeginFrame){
-            updateDownSequence();
-        }else if (event.time < t_chevronBeginFrame){
-            updateChevronSequence();
-        }else{
-            updateCTASequence();
+        if (started == false){
+            startTime = event.time;
+            started = true;
         }
 
+        var section = Math.round(mapRange([startTime, 10000+startTime],[0,4],event.time));
+
+        if (section != currentSection){
+            //section changed - do setup
+            switch (section){
+                case 0:
+                    setupUpSequence();
+                    break;
+                case 1:
+                    setupDownSequence();
+                    break;
+                case 2:
+                    setupChevronSequence();
+                    break;
+                case 3:
+                    setupCTASequence();
+                    break;
+            }
+        }
+
+        switch (section){
+            case 0:
+                updateUpSequence();
+                break;
+            case 1:
+                updateDownSequence();
+                break;
+            case 2:
+                updateChevronSequence();
+                break;
+            case 3:
+                updateCTASequence();
+                break;
+        }
 
         stage.update();
     }
@@ -99,9 +153,8 @@
         }
     }
 
-    function updateCTASequence(){
-        var bar = 0;
-        var foo = bar;
+    function updateChevronSequence(){
+        chevron.x += 10;
     }
 
     function updateCTASequence(){

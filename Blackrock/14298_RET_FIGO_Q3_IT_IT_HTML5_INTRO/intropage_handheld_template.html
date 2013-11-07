@@ -454,10 +454,19 @@ function setup(){
     logo.x = 546;
     logo.y = 698;
 
+    var main = document.getElementById("stage");
+    var render = main.getContext("2d");
+    main.width = 800;
+    main.height = 800;
+    main.style.left = "-100px";
+    main.style.top = "-100px";
+    main.style.position = "absolute";
 
-    stage.left = "-240px";
-    stage.top = "-140px";
-    stage.position = "absolute";
+    //stage.left = "-240px";
+    //stage.top = "-140px";
+    //stage.position = "absolute";
+
+    //stage.setBounds(-240,0,468,468)
 }
 
 function setupUpSequence(){
@@ -633,7 +642,7 @@ function updateUpSequence(){
 }
 
 function updateChevronSequence(){
-    //
+    var foo = 0;
 }
 
 function updateCTASequence(){

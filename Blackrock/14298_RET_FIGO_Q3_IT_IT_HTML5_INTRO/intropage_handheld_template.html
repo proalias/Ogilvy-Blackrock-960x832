@@ -101,6 +101,7 @@ function onTimerEvent(){
 function onShowHandler(){
 	if(!timerStarted){
 		timerStarted = true;
+
 		autoCloseTimeout = setTimeout(onCloseHandler, autoCloseTimer * 1000); 
 		timerInterval = setInterval(onTimerEvent, 1000);
 	}		
@@ -108,8 +109,10 @@ function onShowHandler(){
 function onPlayHandler(e){
 	clearInterval(timerInterval); 
 	clearTimeout(autoCloseTimeout);
+    $("#video_container").css({visibility:'visible'});
 	$('#timerHolder').css('visibility', 'hidden');
 	//new
+
 	videoPlayer.play();
 	
 	screenad.event('user_play');
@@ -240,7 +243,7 @@ body{
 	top:0;
 	left:0;
 	z-index:45;
-	background:#f00;
+	background:#000;
 }
 
 #expanded_image {

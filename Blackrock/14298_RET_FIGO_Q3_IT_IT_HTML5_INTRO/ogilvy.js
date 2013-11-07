@@ -156,12 +156,18 @@ function hideVideoPlayer() {
     //hide video overlay
     overlay = document.getElementById("video_player_overlay");
 
-    overlay.style.left = -2000;
+    overlay.style.top = 100;
+    overlay.style.left = -600;
+
 
     //hide video container
-    vidContainer = document.getElementById("video_container");
+    //vidContainer = document.getElementById("video_container");
 
-    vidContainer.style.left = -2000;
+
+    vidContainer.style.left = 100;
+    vidContainer.style.top = 100;
+
+    $("#video_container").css({visibility:'hidden'});
 }
 
 
@@ -170,23 +176,26 @@ function showVideoPlayer() {
     //hide video overlay
     overlay = document.getElementById("video_player_overlay");
 
-    overlay.style.top = 0;
-    overlay.style.left = 0;
+    overlay.style.top = 100;
+    overlay.style.left = -600;
 
     var overlayDomElement = new createjs.DOMElement(overlay);//<---add element to CreateJS container
     stage.addChild(overlayDomElement);
-    createjs.Tween.get(overlayDomElement, {loop:false}).to({x:100, y:100}, 1000, createjs.Ease.quadOut);
+    createjs.Tween.get(overlayDomElement, {loop:false}).to({x:700, y:0.1}, 1000, createjs.Ease.quadOut);
 
-
+    /*
     //hide video container
     vidContainer = document.getElementById("video_container");
 
     var vidContainerDomElement = new createjs.DOMElement(vidContainer);//<---add element to CreateJS container
 
     stage.addChild(vidContainerDomElement);
-    vidContainer.style.top = 0;
-    vidContainer.style.left = 0;
-    createjs.Tween.get(vidContainerDomElement, {loop:false}).to({x:100, y:100}, 1000, createjs.Ease.quadOut);
+    vidContainer.style.top = 100;
+    vidContainer.style.left = -600;
+    createjs.Tween.get(vidContainerDomElement, {loop:false}).to({x:700, y:0.1}, 1000, createjs.Ease.quadOut);
+    */
+
+
 }
 
 

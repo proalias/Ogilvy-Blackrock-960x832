@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
 
-    <link href="./s/styles.css" rel="stylesheet" type="text/css" />
-
 
     <title>Blackrock</title>
     <script type="text/javascript" src="easeljs-0.7.0.min.js"> </script>
@@ -132,13 +130,14 @@
     positions["down_start"][0] = [-824,-628];
     positions["down_start"][1] = [-630,-95];
     positions["down_start"][2] = [-326,-594];
-    positions["down_start"][3] = [-81,-532];
+    positions["down_start"][3] = [-658,-594];
     positions["down_start"][4] = [-725,-54];
     positions["down_start"][5] = [-823,12];
     positions["down_start"][6] = [-557,-364];
     positions["down_start"][7] = [-283,-449];
-    positions["down_start"][8] = [-658,-594];
-    positions["down_start"][9] = [-496,-208];
+    //unused
+
+    //positions["down_start"][9] = [-496,-208];
 
     positions["down_end"]=[];
 
@@ -150,8 +149,6 @@
     positions["down_end"][5] = [0,0];
     positions["down_end"][6] = [0,0];
     positions["down_end"][7] = [0,0];
-    positions["down_end"][8] = [0,0];
-    positions["down_end"][9] = [0,0];   
 
 
     //setup
@@ -187,11 +184,6 @@
 
             image.scaleX = up_sizes[i];
             image.scaleY = up_sizes[i];
-
-            //var tween = createjs.Tween.get(image, {loop:false}).to({x:positions["up_mid"][i][0], y:positions["up_mid"][i][1]}, 2000*up_sizes[i], createjs.Ease.linear)
-             //    .wait(10000)
-              //   .to({x:positions["up_end"][i][0], y:positions["up_end"][i][1]}, 2500, createjs.Ease.bounceOut)
-               //  .wait(10000);
 
             upImages.push(image);
         }
@@ -232,11 +224,6 @@
             image.scaleX = down_sizes[i];
             image.scaleY = down_sizes[i];
 
-            //var tween = createjs.Tween.get(image, {loop:false}).to({x:positions["up_mid"][i][0], y:positions["up_mid"][i][1]}, 2000*up_sizes[i], createjs.Ease.linear)
-            //    .wait(10000)
-            //   .to({x:positions["up_end"][i][0], y:positions["up_end"][i][1]}, 2500, createjs.Ease.bounceOut)
-            //  .wait(10000);
-
             downImages.push(image);
         }
 
@@ -264,9 +251,7 @@
 
         var tween1 = createjs.Tween.get(chevron0, {loop:false}).to({x:300, y:0}, 2000, createjs.Ease.quadOut);
         var tween2 = createjs.Tween.get(chevron1, {loop:false}).to({x:-400, y:0}, 2000, createjs.Ease.quadOut);
-
-        // .to({x:positions["up_end"][i][0], y:positions["up_end"][i][1]}, 2500, createjs.Ease.bounceOut)
-        //  .wait(10000);
+;
 
         stage.addChild(logo);
         logo.x = 546;

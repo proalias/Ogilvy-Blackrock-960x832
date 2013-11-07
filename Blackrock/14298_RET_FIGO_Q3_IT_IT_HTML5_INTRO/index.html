@@ -7,11 +7,11 @@
 
 
     <title>Blackrock</title>
-    <script type="text/javascript" src="./j/easeljs-0.7.0.min.js"> </script>
-    <script type="text/javascript" src="./j/tweenjs-0.5.0.min.js"> </script>
-    <script type="text/javascript" src="./j/Tween.js"></script>
-    <script type="text/javascript" src="./j/Ease.js"></script>
-    <script type="text/javascript" src="./j/movieclip-0.7.0.min.js"> </script>
+    <script type="text/javascript" src="easeljs-0.7.0.min.js"> </script>
+    <script type="text/javascript" src="tweenjs-0.5.0.min.js"> </script>
+    <script type="text/javascript" src="Tween.js"></script>
+    <script type="text/javascript" src="Ease.js"></script>
+    <script type="text/javascript" src="movieclip-0.7.0.min.js"> </script>
 
 </head>
 <body onload="setup();">
@@ -43,6 +43,10 @@
 
     //state
     var currentSection;
+
+
+    var upArrowCount = 9;
+    var downArrowCount = 7;
 
 
     //timings
@@ -158,7 +162,7 @@
         createjs.Ticker.addEventListener("tick", handleTick);
 
 
-        logo = new createjs.Bitmap("./i/logo.png");
+        logo = new createjs.Bitmap("./logo.png");
 
         logo.x = 546;
         logo.y = 698;
@@ -168,9 +172,14 @@
 
         stage.removeAllChildren();
 
-        copy_up = new createjs.Bitmap("./i/tropi_alti.png");
-        for (var i=0;i<9;i++){
-            var image = new createjs.Bitmap("./i/up.png");
+        copy_up = new createjs.Bitmap("./tropi_alti.png");
+
+        copy_up.x = 366;
+        copy_up.y = 342;
+
+
+        for (var i=0;i<upArrowCount;i++){
+            var image = new createjs.Bitmap("./up.png");
             stage.addChild(image);
 
             image.x = positions["up_start"][i][0];
@@ -187,7 +196,13 @@
             upImages.push(image);
         }
 
+
+
+
         stage.addChild(logo);
+
+        stage.addChild(copy_up);
+
         logo.x = 546;
         logo.y = 698;
     }
@@ -197,14 +212,18 @@
 
         stage.removeAllChildren();
 
-        copy_down = new createjs.Bitmap("./i/tropi_alti.png");
+        copy_down = new createjs.Bitmap("./e_bassi.png");
 
 
-        copy_down.x = 0;
-        copy_down.y = 0;
+        copy_down.x = 490;
+        copy_down.y = 388;
 
-        for (var i=0;i<10;i++){
-            var image = new createjs.Bitmap("./i/down.png");
+
+
+
+
+        for (var i=0;i<downArrowCount;i++){
+            var image = new createjs.Bitmap("./down.png");
             stage.addChild(image);
 
             image.x = positions["down_start"][i][0];
@@ -222,6 +241,7 @@
         }
 
         stage.addChild(logo);
+        stage.addChild(copy_down);
         logo.x = 546;
         logo.y = 698;
     }
@@ -229,8 +249,8 @@
 
     function setupChevronSequence(){
         stage.removeAllChildren();
-        chevron0 = new createjs.Bitmap("./i/chevron.png");
-        chevron1 = new createjs.Bitmap("./i/chevron.png");
+        chevron0 = new createjs.Bitmap("./chevron.png");
+        chevron1 = new createjs.Bitmap("./chevron.png");
 
         chevron0.x = -650;
         chevron0.y = 0;
@@ -255,6 +275,12 @@
 
     function setupCTASequence(){
 
+        var ctaImage = new createjs.Bitmap("./cta.png");
+        stage.addChild(image);
+        var infoImage = new createjs.Bitmap("./information.png");
+        stage.addChild(image);
+        var copyImage = new createjs.Bitmap("./cta_copy.png");
+        stage.addChild(image);
     }
 
 
@@ -271,7 +297,7 @@
             started = true;
         }
 
-        var section = Math.floor(mapRange([startTime, t_ctaBeginFrame + startTime],[0,4],event.time));
+        var section = Math.floor(mapRange([startTime, t_ctaBeginFrame + startTime],[0,4.1],event.time));
 
         if (section != currentSection){
             //section changed - do setup
@@ -311,7 +337,7 @@
     }
 
     function updateDownSequence(){
-        for (var i=0;i<10;i++){
+        for (var i=0;i<downArrowCount;i++){
             var image = downImages[i];
             image.x += 11.5 * (5 * down_sizes[i]);
             image.y += 8.5 * (5 * down_sizes[i]);
@@ -319,10 +345,10 @@
     }
 
     function updateUpSequence(){
-        for (var i=0;i<9;i++){
+        for (var i=0;i<upArrowCount;i++){
             var image = upImages[i];
             image.x += 12.5 * (5 * up_sizes[i]);
-            image.y -= 7.5 * (5 * up_sizes[i]);
+            image.y -= 6.2 * (5 * up_sizes[i]);
         }
     }
 
